@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Ads Campaign - Client Intake & Strategy Form</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        :root {
+            --teal: #008080;
+            --teal-light: #E0F2F2;
+            --teal-dark: #006666;
+            --grey-light: #F5F5F5;
+            --grey-text: #666666;
+            --black: #1A1A1A;
+            --white: #FFFFFF;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f0f0f0;
+            color: var(--black);
+            line-height: 1.5;
+        }
+        
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            background: var(--white);
+            margin: 20px auto;
+            padding: 25mm 20mm;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        .page::before {
+            content: '';
+            position: absolute;
+            top: 15mm;
+            left: 20mm;
+            right: 20mm;
+            height: 3px;
+            background: var(--teal);
+        }
+        
+        .page-number {
+            position: absolute;
+            bottom: 15mm;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 8pt;
+            color: var(--grey-text);
+        }
+        
+        .title {
+            text-align: center;
+            color: var(--teal-dark);
+            font-size: 18pt;
+            font-weight: 700;
+            margin-bottom: 8mm;
+            line-height: 1.3;
+        }
+        
+        .intro-box {
+            background: var(--teal-light);
+            border-left: 3px solid var(--teal);
+            padding: 3mm 4mm;
+            margin-bottom: 6mm;
+        }
+        
+        .intro-text {
+            font-size: 10pt;
+            color: var(--grey-text);
+            text-align: justify;
+            line-height: 1.4;
+        }
+        
+        .section-header {
+            background: var(--teal);
+            color: var(--white);
+            padding: 2mm 3mm;
+            margin: 8mm 0 4mm 0;
+            font-size: 12pt;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        
+        .subsection {
+            font-size: 10pt;
+            font-weight: 600;
+            color: var(--teal-dark);
+            margin: 4mm 0 2mm 0;
+        }
+        
+        .field-group {
+            margin-bottom: 3mm;
+        }
+        
+        .field-label {
+            font-size: 9pt;
+            font-weight: 600;
+            color: var(--black);
+            margin-bottom: 1mm;
+            display: block;
+        }
+        
+        .field-input {
+            width: 100%;
+            background: var(--grey-light);
+            border: 0.5px solid #ddd;
+            padding: 2mm;
+            font-family: 'Inter', sans-serif;
+            font-size: 9pt;
+            min-height: 7mm;
+            resize: vertical;
+        }
+        
+        .field-input.large {
+            min-height: 20mm;
+        }
+        
+        .field-input.xlarge {
+            min-height: 40mm;
+        }
+        
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6mm;
+        }
+        
+        .checkbox-list {
+            margin-left: 5mm;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            font-size: 9pt;
+            margin: 1mm 0;
+            gap: 2mm;
+        }
+        
+        .checkbox-item input[type="checkbox"] {
+            width: 3.5mm;
+            height: 3.5mm;
+            accent-color: var(--teal);
+        }
+        
+        .checkbox-item label {
+            cursor: pointer;
+        }
+        
+        .footer {
+            margin-top: 10mm;
+            padding-top: 5mm;
+            border-top: 1px solid var(--teal);
+            text-align: center;
+        }
+        
+        .footer p {
+            font-size: 8pt;
+            color: var(--grey-text);
+            margin: 1mm 0;
+        }
+        
+        .footer .bold {
+            font-weight: 600;
+        }
+        
+        .footer .teal {
+            color: var(--teal);
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            .page {
+                margin: 0;
+                box-shadow: none;
+                page-break-after: always;
+            }
+        }
+        
+        .print-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--teal);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 128, 128, 0.3);
+            z-index: 1000;
+        }
+        
+        .print-btn:hover {
+            background: var(--teal-dark);
+        }
+        
+        @media print {
+            .print-btn {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="print-btn" onclick="window.print()">Print / Save as PDF</button>
+    
+    <!-- PAGE 1 -->
+    <div class="page">
+        <div class="title">
+            Google Ads Campaign<br>
+            Client Intake & Strategy Requirements Form
+        </div>
+        
+        <div class="intro-box">
+            <p class="intro-text">
+                This intake form is designed to collect the essential information required to plan, execute, 
+                and optimize a Google Ads campaign. Please provide as much detail as possible so we can align 
+                campaign strategy with your business goals and target audience.
+            </p>
+        </div>
+        
+        <div class="section-header">COMPANY INFORMATION</div>
+        
+        <div class="two-column">
+            <div class="field-group">
+                <label class="field-label">Company Name:</label>
+                <input type="text" class="field-input">
+            </div>
+            <div class="field-group">
+                <label class="field-label">Contact Person:</label>
+                <input type="text" class="field-input">
+            </div>
+            <div class="field-group">
+                <label class="field-label">Position / Role:</label>
+                <input type="text" class="field-input">
+            </div>
+            <div class="field-group">
+                <label class="field-label">Email:</label>
+                <input type="email" class="field-input">
+            </div>
+            <div class="field-group">
+                <label class="field-label">Phone / WhatsApp:</label>
+                <input type="text" class="field-input">
+            </div>
+            <div class="field-group">
+                <label class="field-label">Website:</label>
+                <input type="text" class="field-input">
+            </div>
+        </div>
+        
+        <div class="field-group">
+            <label class="field-label">Office Location:</label>
+            <input type="text" class="field-input">
+        </div>
+        
+        <div class="section-header">CAMPAIGN OBJECTIVE</div>
+        
+        <div class="subsection">Select the primary campaign goal:</div>
+        <div class="checkbox-list">
+            <div class="checkbox-item"><input type="checkbox" id="goal1"><label for="goal1">Lead Generation</label></div>
+            <div class="checkbox-item"><input type="checkbox" id="goal2"><label for="goal2">Sales Inquiries (Wholesale / Retail)</label></div>
+            <div class="checkbox-item"><input type="checkbox" id="goal3"><label for="goal3">Brand Awareness</label></div>
+            <div class="checkbox-item"><input type="checkbox" id="goal4"><label for="goal4">Product Promotion</label></div>
+            <div class="checkbox-item"><input type="checkbox" id="goal5"><label for="goal5">Website Traffic</label></div>
+            <div class="checkbox-item"><input type="checkbox" id="goal6"><label for="goal6">Other: _________________________________</label></div>
+        </div>
+        
+        <div class="field-group" style="margin-top: 3mm;">
+            <label class="field-label">Describe your expected outcome:</label>
+            <textarea class="field-input large"></textarea>
+        </div>
+        
+        <div class="section-header">TARGET AUDIENCE & LOCATION</div>
+        
+        <div class="subsection">Who are your ideal customers?</div>
+        <div class="checkbox-list">
+            <div class="checkbox-item"><input type="checkbox" id="cust1"><label for="cust1">Retail Customers</label></div>
+            <div class="checkbox-item"><input type="checkbox" id="cust2"><label for="cust2">Wholesale Buyers</label></div>
+            <div class="checkbox-item"><input type="checkbox" id="cust3"><label for="cust3">Contractors / Professionals</label></div>
+            <div class="checkbox-item"><input type="checkbox" id="cust4"><label for="cust4">Other: _________________________________</label></div>
+        </div>
+        
+        <div class="subsection">Geographical targeting:</div>
+        <div class="checkbox-list">
+            <div class="checkbox-item"><input type="checkbox" id="geo1"><label for="geo1">UAE (All Emirates)</label></div>
+            <div class="checkbox-item"><input type="checkbox" id="geo2"><label for="geo2">Specific Emirates: _________________________________</label></div>
+            <div class="checkbox-item"><input type="checkbox" id="geo3"><label for="geo3">International Markets: _________________________________</label></div>
+        </div>
+        
+        <div class="subsection">Languages required:</div>
+        <div class="checkbox-list">
+            <div class="checkbox-item"><input type="checkbox" id="lang1"><label for="lang1">English</label></div>
+            <div class="checkbox-item"><input type="checkbox" id="lang2"><label for="lang2">Arabic</label></div>
+            <div class="checkbox-item"><input type="checkbox" id="lang3"><label for="lang3">Both English & Arabic</label></div>
+            <div class="checkbox-item"><input type="checkbox" id="lang4"><label for="lang4">Other: _________________________________</label></div>
+        </div>
+        
+        <div class="page-number">Page 1</div>
+    </div>
+    
+    <!-- PAGE 2 -->
+    <div class="page">
+        <div class="section-header">CAMPAIGN BUDGET</div>
+        
+        <div class="subsection">Daily budget (Approximate):</div>
+        <div class="checkbox-list">
+            <div class="checkbox-item"><input type="checkbox" id="budget1"><label for="budget1">10 - 20 AED</label></div>
+            <div class="checkbox-item"><input type="checkbox" id="budget2"><label for="budget2">20 - 50 AED</label></div>
+            <div class="checkbox-item"><input type="checkbox" id="budget3"><label for="budget3">50 - 100 AED</label></div>
+            <div class="checkbox-item"><input type="checkbox" id="budget4"><label for="budget4">100+ AED</label></div>
+            <div class="checkbox-item"><input type="checkbox" id="budget5"><label for="budget5">Other: _________________________________</label></div>
+        </div>
+        
+        <div class="subsection">Can budget increase after positive results?</div>
+        <div class="checkbox-list">
+            <div class="checkbox-item"><input type="checkbox" id="inc1"><label for="inc1">Yes</label></div>
+            <div class="checkbox-item"><input type="checkbox" id="inc2"><label for="inc2">No</label></div>
+            <div class="checkbox-item"><input type="checkbox" id="inc3"><label for="inc3">To be discussed based on ROI</label></div>
+        </div>
+        
+        <div class="section-header">PRODUCTS OR SERVICES TO PROMOTE</div>
+        
+        <div class="field-group">
+            <label class="field-label">List your core products/services with priority order:</label>
+            <textarea class="field-input large"></textarea>
+        </div>
+        
+        <div class="field-group">
+            <label class="field-label">Product catalog link or upload reference:</label>
+            <input type="text" class="field-input">
+        </div>
+        
+        <div class="field-group">
+            <label class="field-label">High-margin or focus products to prioritize:</label>
+            <textarea class="field-input" style="min-height: 15mm;"></textarea>
+        </div>
+        
+        <div class="section-header">LEAD & CONVERSION DEFINITION</div>
+        
+        <div class="subsection">What counts as a lead for you?</div>
+        <div class="checkbox-list">
+            <div class="checkbox-item"><input type="checkbox" id="lead1"><label for="lead1">Phone Call</label></div>
+            <div class="checkbox-item"><input type="checkbox" id="lead2"><label for="lead2">WhatsApp Click / Message</label></div>
+            <div class="checkbox-item"><input type="checkbox" id="lead3"><label for="lead3">Website Form Submission</label></div>
+            <div class="checkbox-item"><input type="checkbox" id="lead4"><label for="lead4">Email Inquiry</label></div>
+            <div class="checkbox-item"><input type="checkbox" id="lead5"><label for="lead5">Store Visit / Direction Request</label></div>
+            <div class="checkbox-item"><input type="checkbox" id="lead6"><label for="lead6">Other: _________________________________</label></div>
+        </div>
+        
+        <div class="section-header">KEYWORDS & COMPETITORS</div>
+        
+        <div class="field-group">
+            <label class="field-label">Keywords you want to target (if available):</label>
+            <textarea class="field-input" style="min-height: 15mm;"></textarea>
+        </div>
+        
+        <div class="field-group">
+            <label class="field-label">Competitor companies / websites / brands:</label>
+            <textarea class="field-input" style="min-height: 15mm;"></textarea>
+        </div>
+        
+        <div class="field-group">
+            <label class="field-label">Any competitor strengths or weaknesses to note:</label>
+            <textarea class="field-input" style="min-height: 15mm;"></textarea>
+        </div>
+        
+        <div class="page-number">Page 2</div>
+    </div>
+    
+    <!-- PAGE 3 -->
+    <div class="page">
+        <div class="section-header">UNIQUE SELLING POINTS (USPs)</div>
+        
+        <div class="subsection">Select all that apply to your business:</div>
+        <div class="checkbox-list">
+            <div class="checkbox-item"><input type="checkbox" id="usp1"><label for="usp1">Fast / Same-Day Delivery</label></div>
+            <div class="checkbox-item"><input type="checkbox" id="usp2"><label for="usp2">Competitive Pricing Advantage</label></div>
+            <div class="checkbox-item"><input type="checkbox" id="usp3"><label for="usp3">Installation / Service Support</label></div>
+            <div class="checkbox-item"><input type="checkbox" id="usp4"><label for="usp4">Warranty / Guarantee</label></div>
+            <div class="checkbox-item"><input type="checkbox" id="usp5"><label for="usp5">Wide Product Variety</label></div>
+            <div class="checkbox-item"><input type="checkbox" id="usp6"><label for="usp6">Custom Orders Available</label></div>
+            <div class="checkbox-item"><input type="checkbox" id="usp7"><label for="usp7">Quality Certifications</label></div>
+            <div class="checkbox-item"><input type="checkbox" id="usp8"><label for="usp8">Years of Experience / Established Brand</label></div>
+            <div class="checkbox-item"><input type="checkbox" id="usp9"><label for="usp9">After-Sales Service</label></div>
+            <div class="checkbox-item"><input type="checkbox" id="usp10"><label for="usp10">Free Consultation / Quotes</label></div>
+        </div>
+        
+        <div class="field-group" style="margin-top: 3mm;">
+            <label class="field-label">Other USPs specific to your business:</label>
+            <textarea class="field-input" style="min-height: 15mm;"></textarea>
+        </div>
+        
+        <div class="section-header">ASSETS & BRAND MATERIALS</div>
+        
+        <div class="subsection">Please provide the following materials:</div>
+        <div class="checkbox-list">
+            <div class="checkbox-item"><input type="checkbox" id="asset1"><label for="asset1">Company Logo (PDF / PNG / SVG format)</label></div>
+            <div class="checkbox-item"><input type="checkbox" id="asset2"><label for="asset2">Product Photos (High Resolution)</label></div>
+            <div class="checkbox-item"><input type="checkbox" id="asset3"><label for="asset3">Brand Guidelines Document</label></div>
+            <div class="checkbox-item"><input type="checkbox" id="asset4"><label for="asset4">Previous Ad Creatives (if available)</label></div>
+            <div class="checkbox-item"><input type="checkbox" id="asset5"><label for="asset5">Company Brochure / Catalog</label></div>
+        </div>
+        
+        <div class="field-group" style="margin-top: 3mm;">
+            <label class="field-label">Notes on brand materials:</label>
+            <textarea class="field-input" style="min-height: 12mm;"></textarea>
+        </div>
+        
+        <div class="section-header">CAMPAIGN TIMELINE</div>
+        
+        <div class="subsection">Preferred campaign duration:</div>
+        <div class="checkbox-list">
+            <div class="checkbox-item"><input type="checkbox" id="time1"><label for="time1">1 - 3 Months (Initial Testing Phase)</label></div>
+            <div class="checkbox-item"><input type="checkbox" id="time2"><label for="time2">3 - 6 Months (Optimization & Scaling)</label></div>
+            <div class="checkbox-item"><input type="checkbox" id="time3"><label for="time3">6+ Months (Long-term Strategy)</label></div>
+            <div class="checkbox-item"><input type="checkbox" id="time4"><label for="time4">Ongoing / Continuous</label></div>
+        </div>
+        
+        <div class="field-group" style="margin-top: 3mm;">
+            <label class="field-label">Preferred campaign launch date:</label>
+            <input type="text" class="field-input">
+        </div>
+        
+        <div class="section-header">ADDITIONAL NOTES & INSTRUCTIONS</div>
+        
+        <div class="field-group">
+            <label class="field-label">Any other information, special requirements, or instructions:</label>
+            <textarea class="field-input xlarge"></textarea>
+        </div>
+        
+        <div class="footer">
+            <p class="bold">Prepared as part of Google Ads Strategy Planning & Audit</p>
+            <p>AL Tawsa Electro Mechanical Trading</p>
+            <p class="teal">Designed in Teal Theme | Clean Minimal Layout</p>
+        </div>
+        
+        <div class="page-number">Page 3</div>
+    </div>
+</body>
+</html>
