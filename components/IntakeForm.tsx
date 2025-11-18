@@ -151,13 +151,13 @@ export default function IntakeForm() {
         <div className="bg-gradient-to-r from-webifyd-navy to-webifyd-blue text-white p-8 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full -mr-32 -mt-32"></div>
           <div className="relative z-10">
-            <div className="mb-6">
+            <div className="mb-6 inline-block bg-white px-6 py-3 rounded-lg shadow-lg">
               <Image
                 src="/webifyd-logo-tp.png"
                 alt="Webifyd Technologies"
-                width={200}
-                height={60}
-                className="h-12 w-auto"
+                width={300}
+                height={90}
+                className="h-16 w-auto"
               />
             </div>
             <h1 className="text-3xl md:text-4xl font-bold mb-3 text-white">
