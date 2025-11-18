@@ -656,15 +656,17 @@ export default function IntakeForm() {
                       <label htmlFor={`goal-${goal}`}>{goal}</label>
                     </div>
                   ))}
+                  {formData.campaignObjective.goals.includes('Other') && (
                   <div className="field-group mt-2">
                     <input
                       type="text"
                       className="field-input"
-                      placeholder="Other (please specify)"
+                      placeholder="e.g., Launch new product line, enter new market segment"
                       value={formData.campaignObjective.otherGoal || ''}
                       onChange={(e) => handleInputChange('campaignObjective', 'otherGoal', e.target.value)}
                     />
                   </div>
+                  )}
                 </div>
 
                 <div className="field-group mt-6">
@@ -703,17 +705,19 @@ export default function IntakeForm() {
                       <label htmlFor={`customer-${type}`}>{type}</label>
                     </div>
                   ))}
+                  {formData.targetAudience.customerTypes.includes('Other') && (
                   <div className="field-group mt-2">
                     <input
                       type="text"
                       className="field-input"
-                      placeholder="Other (please specify)"
+                      placeholder="e.g., Government entities, Educational institutions, NGOs"
                       value={formData.targetAudience.otherCustomerType || ''}
                       onChange={(e) =>
                         handleInputChange('targetAudience', 'otherCustomerType', e.target.value)
                       }
                     />
                   </div>
+                  )}
                 </div>
 
                 <p className="subsection mt-6">Geographical targeting:</p>
@@ -734,28 +738,34 @@ export default function IntakeForm() {
                     />
                     <label htmlFor="geo-uae">UAE (All Emirates)</label>
                   </div>
+                  {formData.targetAudience.geographicTargeting.includes('UAE (All Emirates)') && (
                   <div className="field-group">
+                    <label className="field-label text-sm">Specific Emirates (Optional):</label>
                     <input
                       type="text"
                       className="field-input"
-                      placeholder="Specific Emirates"
+                      placeholder="e.g., Dubai, Abu Dhabi, Sharjah"
                       value={formData.targetAudience.specificEmirates || ''}
                       onChange={(e) =>
                         handleInputChange('targetAudience', 'specificEmirates', e.target.value)
                       }
                     />
                   </div>
+                  )}
+                  {formData.targetAudience.geographicTargeting.length > 0 && (
                   <div className="field-group">
+                    <label className="field-label text-sm">International Markets (if applicable):</label>
                     <input
                       type="text"
                       className="field-input"
-                      placeholder="International Markets"
+                      placeholder="e.g., Saudi Arabia, Egypt, Qatar, India, Pakistan"
                       value={formData.targetAudience.internationalMarkets || ''}
                       onChange={(e) =>
                         handleInputChange('targetAudience', 'internationalMarkets', e.target.value)
                       }
                     />
                   </div>
+                  )}
                 </div>
 
                 <p className="subsection mt-6">Languages required:</p>
@@ -773,17 +783,20 @@ export default function IntakeForm() {
                       <label htmlFor={`lang-${lang}`}>{lang}</label>
                     </div>
                   ))}
+                  {formData.targetAudience.languages.length > 0 && (
                   <div className="field-group mt-2">
                     <input
                       type="text"
                       className="field-input"
-                      placeholder="Other (please specify)"
+                      placeholder="e.g., Urdu, Hindi, French, Chinese"
                       value={formData.targetAudience.otherLanguage || ''}
                       onChange={(e) =>
                         handleInputChange('targetAudience', 'otherLanguage', e.target.value)
                       }
                     />
+                    <p className="text-xs text-gray-500 mt-1">Add any additional languages not listed above</p>
                   </div>
+                  )}
                 </div>
               </div>
             </section>
@@ -824,6 +837,26 @@ export default function IntakeForm() {
                     />
                   </div>
                 </div>
+
+                {/* Budget Warning for Low Budgets */}
+                {(formData.campaignBudget.dailyBudget === '10 - 20 AED' ||
+                  formData.campaignBudget.dailyBudget === '20 - 50 AED') && (
+                <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mt-4 rounded-r">
+                  <div className="flex">
+                    <svg className="w-5 h-5 text-yellow-400 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                    </svg>
+                    <div>
+                      <p className="text-sm font-medium text-yellow-800">
+                        ⚠️ Low Budget Warning
+                      </p>
+                      <p className="text-xs text-yellow-700 mt-1">
+                        This budget may significantly limit campaign reach and effectiveness. Google Ads typically requires 300-500 AED/day for meaningful results in competitive markets like Dubai. Consider starting with at least 100 AED/day for better performance.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                )}
 
                 <p className="subsection mt-6">Can budget increase after positive results?</p>
                 <div className="ml-6 space-y-2">
@@ -919,17 +952,20 @@ export default function IntakeForm() {
                       <label htmlFor={`lead-${lead}`}>{lead}</label>
                     </div>
                   ))}
+                  {formData.leadDefinition.leadTypes.length > 0 && (
                   <div className="field-group mt-2">
                     <input
                       type="text"
                       className="field-input"
-                      placeholder="Other (please specify)"
+                      placeholder="e.g., App Download, Video View, Social Media Follow"
                       value={formData.leadDefinition.otherLeadType || ''}
                       onChange={(e) =>
                         handleInputChange('leadDefinition', 'otherLeadType', e.target.value)
                       }
                     />
+                    <p className="text-xs text-gray-500 mt-1">Add any additional lead types not listed above</p>
                   </div>
+                  )}
                 </div>
               </div>
             </section>
