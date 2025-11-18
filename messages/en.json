@@ -1,0 +1,207 @@
+{
+  "app": {
+    "title": "Google Ads Client Intake Form",
+    "tagline": "Digital Solutions You Can Trust",
+    "submit": "Submit Form",
+    "submitting": "Submitting...",
+    "nextStep": "Next Step",
+    "previousStep": "Previous Step",
+    "reviewSubmit": "Review & Submit"
+  },
+  "progress": {
+    "section": "Section {current} of {total}",
+    "completion": "{percentage}% Complete",
+    "estimatedTime": "{minutes} min remaining"
+  },
+  "sections": {
+    "companyInfo": "Company Information",
+    "campaignObjective": "Campaign Objective",
+    "targetAudience": "Target Audience & Location",
+    "campaignBudget": "Campaign Budget",
+    "productsServices": "Products/Services to Promote",
+    "leadDefinition": "Lead & Conversion Definition",
+    "keywordsCompetitors": "Keywords & Competitors",
+    "usps": "Unique Selling Points",
+    "brandMaterials": "Assets & Brand Materials",
+    "campaignTimeline": "Campaign Timeline",
+    "additionalNotes": "Additional Notes",
+    "reviewSummary": "Review & Submit"
+  },
+  "companyInfo": {
+    "companyName": "Company Name",
+    "companyNamePlaceholder": "Enter your company name",
+    "contactPerson": "Contact Person",
+    "contactPersonPlaceholder": "Full name",
+    "position": "Position/Title",
+    "positionPlaceholder": "e.g., Marketing Manager",
+    "email": "Email Address",
+    "emailPlaceholder": "your.email@company.com",
+    "phone": "Phone Number",
+    "phonePlaceholder": "+971 XX XXX XXXX",
+    "website": "Website URL",
+    "websitePlaceholder": "https://www.yourcompany.com",
+    "officeLocation": "Office Location",
+    "officeLocationPlaceholder": "City, Country"
+  },
+  "campaignObjective": {
+    "title": "What are your primary campaign goals?",
+    "goals": {
+      "websiteTraffic": "Increase website traffic",
+      "leadGeneration": "Lead generation (forms, calls, etc.)",
+      "onlineSales": "Online sales/e-commerce",
+      "brandAwareness": "Brand awareness",
+      "appInstalls": "App installs/downloads",
+      "storeVisits": "Store visits",
+      "other": "Other"
+    },
+    "otherGoal": "Please specify other goal",
+    "expectedOutcome": "What is your expected outcome?",
+    "expectedOutcomePlaceholder": "e.g., 100 qualified leads per month, 20% increase in sales",
+    "tooltip": "Be specific about your goals. For example: '50 qualified leads per month' or '10% increase in website traffic'"
+  },
+  "targetAudience": {
+    "customerTypes": "Customer Types",
+    "customerTypesOptions": {
+      "b2b": "B2B (Business to Business)",
+      "b2c": "B2C (Business to Consumer)",
+      "both": "Both B2B & B2C",
+      "other": "Other"
+    },
+    "geographicTargeting": "Geographic Targeting",
+    "geographicOptions": {
+      "uaeNationwide": "UAE - Nationwide",
+      "specificEmirates": "UAE - Specific Emirates",
+      "gcc": "GCC Countries",
+      "mena": "MENA Region",
+      "international": "International Markets"
+    },
+    "specificEmirates": "Which Emirates?",
+    "specificEmiratesPlaceholder": "e.g., Dubai, Abu Dhabi, Sharjah",
+    "internationalMarkets": "Which International Markets?",
+    "internationalMarketsPlaceholder": "e.g., Saudi Arabia, Egypt, UK",
+    "languages": "Target Languages",
+    "languagesOptions": {
+      "english": "English",
+      "arabic": "Arabic",
+      "urdu": "Urdu",
+      "hindi": "Hindi",
+      "french": "French",
+      "other": "Other"
+    },
+    "otherLanguage": "Please specify other language"
+  },
+  "campaignBudget": {
+    "dailyBudget": "Daily Budget Range",
+    "dailyBudgetOptions": {
+      "upTo100": "Up to AED 100/day",
+      "100To300": "AED 100 - 300/day",
+      "300To500": "AED 300 - 500/day",
+      "500To1000": "AED 500 - 1,000/day",
+      "1000Plus": "AED 1,000+/day",
+      "other": "Other/Custom"
+    },
+    "otherBudget": "Please specify your budget",
+    "budgetIncrease": "Are you willing to increase budget based on performance?",
+    "budgetIncreasePlaceholder": "e.g., Yes, up to 50% if ROI is positive",
+    "tooltip": "Your budget determines reach and competitiveness. We can help optimize regardless of size."
+  },
+  "productsServices": {
+    "coreProducts": "Core Products/Services",
+    "coreProductsPlaceholder": "List your main products or services",
+    "catalogLink": "Product Catalog/Price List",
+    "catalogLinkPlaceholder": "Link to product catalog, brochure, or price list (if available)",
+    "focusProducts": "Focus Products/Services",
+    "focusProductsPlaceholder": "Which products would you like to focus on in this campaign?"
+  },
+  "leadDefinition": {
+    "title": "What counts as a lead or conversion for you?",
+    "leadTypes": {
+      "formSubmission": "Form submission",
+      "phoneCall": "Phone call",
+      "emailInquiry": "Email inquiry",
+      "whatsappMessage": "WhatsApp message",
+      "chatConversation": "Chat conversation",
+      "downloadRequest": "Download/brochure request",
+      "appointmentBooking": "Appointment booking",
+      "purchase": "Direct purchase",
+      "other": "Other"
+    },
+    "otherLeadType": "Please specify other lead type"
+  },
+  "keywordsCompetitors": {
+    "keywords": "Target Keywords",
+    "keywordsPlaceholder": "e.g., digital marketing dubai, web design uae, SEO services",
+    "keywordsTooltip": "List 5-10 keywords your customers might search for. Include location-specific terms like 'Dubai' or 'UAE' if relevant.",
+    "competitors": "Main Competitors",
+    "competitorsPlaceholder": "e.g., CompanyA.com, CompanyB.ae",
+    "competitorsTooltip": "List 3-5 direct competitors. This helps us understand your market positioning.",
+    "competitorNotes": "Competitive Advantages",
+    "competitorNotesPlaceholder": "What makes you different from competitors?"
+  },
+  "usps": {
+    "title": "What makes you unique?",
+    "selectedUSPs": {
+      "bestPrice": "Best price guarantee",
+      "quality": "Superior quality",
+      "experience": "Years of experience",
+      "customerService": "Excellent customer service",
+      "fastDelivery": "Fast delivery/turnaround",
+      "warranty": "Strong warranty/guarantees",
+      "localExpertise": "Local expertise",
+      "innovation": "Innovative solutions",
+      "other": "Other"
+    },
+    "otherUSPs": "Please specify other USPs",
+    "tooltip": "Select your strongest selling points. Be honest - these will form the core of your ad messaging."
+  },
+  "brandMaterials": {
+    "title": "What brand materials do you have available?",
+    "materials": {
+      "logo": "Logo files (PNG, SVG, AI)",
+      "images": "Product/service images",
+      "videos": "Video content",
+      "brandGuidelines": "Brand guidelines",
+      "existingAds": "Existing ad creatives",
+      "none": "None - need help creating"
+    },
+    "notes": "Additional Notes",
+    "notesPlaceholder": "e.g., Brand colors are blue and white, modern minimalist style"
+  },
+  "campaignTimeline": {
+    "duration": "Preferred Campaign Duration",
+    "durationOptions": {
+      "oneMonth": "1 month trial",
+      "threeMonths": "3 months",
+      "sixMonths": "6 months",
+      "oneYear": "1 year",
+      "ongoing": "Ongoing/no fixed end",
+      "other": "Other"
+    },
+    "launchDate": "Preferred Launch Date",
+    "launchDateTooltip": "Pick a realistic start date. Account setup and optimization typically take 5-7 business days."
+  },
+  "additionalNotes": {
+    "title": "Anything else we should know?",
+    "notesPlaceholder": "Add any additional information, special requirements, or questions"
+  },
+  "validation": {
+    "required": "This field is required",
+    "invalidEmail": "Please enter a valid email address",
+    "invalidPhone": "Please enter a valid phone number",
+    "invalidUrl": "Please enter a valid URL"
+  },
+  "messages": {
+    "success": "Thank you! Your form has been submitted successfully.",
+    "successDescription": "Our team will review your requirements and get back to you within 24 hours.",
+    "error": "Oops! Something went wrong.",
+    "errorDescription": "Please try again or contact us directly.",
+    "autoSaved": "Draft auto-saved",
+    "draftRestored": "Previous draft restored"
+  },
+  "review": {
+    "title": "Review Your Submission",
+    "subtitle": "Please review your information before submitting",
+    "edit": "Edit",
+    "notProvided": "Not provided"
+  }
+}

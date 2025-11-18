@@ -1,0 +1,207 @@
+{
+  "app": {
+    "title": "نموذج إعلانات جوجل للعملاء",
+    "tagline": "حلول رقمية يمكنك الوثوق بها",
+    "submit": "إرسال النموذج",
+    "submitting": "جاري الإرسال...",
+    "nextStep": "الخطوة التالية",
+    "previousStep": "الخطوة السابقة",
+    "reviewSubmit": "المراجعة والإرسال"
+  },
+  "progress": {
+    "section": "القسم {current} من {total}",
+    "completion": "{percentage}٪ مكتمل",
+    "estimatedTime": "{minutes} دقيقة متبقية"
+  },
+  "sections": {
+    "companyInfo": "معلومات الشركة",
+    "campaignObjective": "هدف الحملة",
+    "targetAudience": "الجمهور المستهدف والموقع",
+    "campaignBudget": "ميزانية الحملة",
+    "productsServices": "المنتجات/الخدمات المراد الترويج لها",
+    "leadDefinition": "تعريف العملاء المحتملين والتحويلات",
+    "keywordsCompetitors": "الكلمات المفتاحية والمنافسون",
+    "usps": "نقاط البيع الفريدة",
+    "brandMaterials": "الأصول ومواد العلامة التجارية",
+    "campaignTimeline": "الجدول الزمني للحملة",
+    "additionalNotes": "ملاحظات إضافية",
+    "reviewSummary": "المراجعة والإرسال"
+  },
+  "companyInfo": {
+    "companyName": "اسم الشركة",
+    "companyNamePlaceholder": "أدخل اسم شركتك",
+    "contactPerson": "الشخص المسؤول",
+    "contactPersonPlaceholder": "الاسم الكامل",
+    "position": "المسمى الوظيفي",
+    "positionPlaceholder": "مثال: مدير التسويق",
+    "email": "البريد الإلكتروني",
+    "emailPlaceholder": "your.email@company.com",
+    "phone": "رقم الهاتف",
+    "phonePlaceholder": "+971 XX XXX XXXX",
+    "website": "رابط الموقع الإلكتروني",
+    "websitePlaceholder": "https://www.yourcompany.com",
+    "officeLocation": "موقع المكتب",
+    "officeLocationPlaceholder": "المدينة، الدولة"
+  },
+  "campaignObjective": {
+    "title": "ما هي أهدافك الأساسية للحملة؟",
+    "goals": {
+      "websiteTraffic": "زيادة حركة المرور على الموقع",
+      "leadGeneration": "توليد العملاء المحتملين (نماذج، مكالمات، إلخ)",
+      "onlineSales": "المبيعات عبر الإنترنت/التجارة الإلكترونية",
+      "brandAwareness": "الوعي بالعلامة التجارية",
+      "appInstalls": "تثبيت/تنزيل التطبيقات",
+      "storeVisits": "زيارات المتاجر",
+      "other": "أخرى"
+    },
+    "otherGoal": "يرجى تحديد الهدف الآخر",
+    "expectedOutcome": "ما هي النتيجة المتوقعة؟",
+    "expectedOutcomePlaceholder": "مثال: 100 عميل محتمل مؤهل شهريًا، زيادة 20٪ في المبيعات",
+    "tooltip": "كن محددًا بشأن أهدافك. على سبيل المثال: '50 عميلاً محتملاً مؤهلاً شهريًا' أو 'زيادة 10٪ في حركة المرور على الموقع'"
+  },
+  "targetAudience": {
+    "customerTypes": "أنواع العملاء",
+    "customerTypesOptions": {
+      "b2b": "B2B (شركة إلى شركة)",
+      "b2c": "B2C (شركة إلى مستهلك)",
+      "both": "كلاهما B2B و B2C",
+      "other": "أخرى"
+    },
+    "geographicTargeting": "الاستهداف الجغرافي",
+    "geographicOptions": {
+      "uaeNationwide": "الإمارات - على مستوى الدولة",
+      "specificEmirates": "الإمارات - إمارات محددة",
+      "gcc": "دول مجلس التعاون الخليجي",
+      "mena": "منطقة الشرق الأوسط وشمال أفريقيا",
+      "international": "أسواق دولية"
+    },
+    "specificEmirates": "أي الإمارات؟",
+    "specificEmiratesPlaceholder": "مثال: دبي، أبوظبي، الشارقة",
+    "internationalMarkets": "أي أسواق دولية؟",
+    "internationalMarketsPlaceholder": "مثال: السعودية، مصر، المملكة المتحدة",
+    "languages": "اللغات المستهدفة",
+    "languagesOptions": {
+      "english": "الإنجليزية",
+      "arabic": "العربية",
+      "urdu": "الأردية",
+      "hindi": "الهندية",
+      "french": "الفرنسية",
+      "other": "أخرى"
+    },
+    "otherLanguage": "يرجى تحديد لغة أخرى"
+  },
+  "campaignBudget": {
+    "dailyBudget": "نطاق الميزانية اليومية",
+    "dailyBudgetOptions": {
+      "upTo100": "حتى 100 درهم/يوم",
+      "100To300": "100 - 300 درهم/يوم",
+      "300To500": "300 - 500 درهم/يوم",
+      "500To1000": "500 - 1,000 درهم/يوم",
+      "1000Plus": "1,000+ درهم/يوم",
+      "other": "أخرى/مخصصة"
+    },
+    "otherBudget": "يرجى تحديد ميزانيتك",
+    "budgetIncrease": "هل أنت مستعد لزيادة الميزانية بناءً على الأداء؟",
+    "budgetIncreasePlaceholder": "مثال: نعم، حتى 50٪ إذا كان العائد على الاستثمار إيجابيًا",
+    "tooltip": "تحدد ميزانيتك مدى الوصول والتنافسية. يمكننا المساعدة في التحسين بغض النظر عن الحجم."
+  },
+  "productsServices": {
+    "coreProducts": "المنتجات/الخدمات الأساسية",
+    "coreProductsPlaceholder": "اذكر منتجاتك أو خدماتك الرئيسية",
+    "catalogLink": "كتالوج المنتجات/قائمة الأسعار",
+    "catalogLinkPlaceholder": "رابط لكتالوج المنتجات أو الكتيب أو قائمة الأسعار (إن وجد)",
+    "focusProducts": "منتجات/خدمات التركيز",
+    "focusProductsPlaceholder": "ما المنتجات التي ترغب في التركيز عليها في هذه الحملة؟"
+  },
+  "leadDefinition": {
+    "title": "ما الذي يعتبر عميلاً محتملاً أو تحويلاً بالنسبة لك؟",
+    "leadTypes": {
+      "formSubmission": "إرسال نموذج",
+      "phoneCall": "مكالمة هاتفية",
+      "emailInquiry": "استفسار عبر البريد الإلكتروني",
+      "whatsappMessage": "رسالة واتساب",
+      "chatConversation": "محادثة دردشة",
+      "downloadRequest": "طلب تنزيل/كتيب",
+      "appointmentBooking": "حجز موعد",
+      "purchase": "شراء مباشر",
+      "other": "أخرى"
+    },
+    "otherLeadType": "يرجى تحديد نوع آخر من العملاء المحتملين"
+  },
+  "keywordsCompetitors": {
+    "keywords": "الكلمات المفتاحية المستهدفة",
+    "keywordsPlaceholder": "مثال: تسويق رقمي دبي، تصميم مواقع الإمارات، خدمات SEO",
+    "keywordsTooltip": "اذكر 5-10 كلمات مفتاحية قد يبحث عنها عملاؤك. قم بتضمين مصطلحات خاصة بالموقع مثل 'دبي' أو 'الإمارات' إن كانت ذات صلة.",
+    "competitors": "المنافسون الرئيسيون",
+    "competitorsPlaceholder": "مثال: CompanyA.com، CompanyB.ae",
+    "competitorsTooltip": "اذكر 3-5 منافسين مباشرين. هذا يساعدنا على فهم موقعك في السوق.",
+    "competitorNotes": "المزايا التنافسية",
+    "competitorNotesPlaceholder": "ما الذي يجعلك مختلفًا عن المنافسين؟"
+  },
+  "usps": {
+    "title": "ما الذي يجعلك فريدًا؟",
+    "selectedUSPs": {
+      "bestPrice": "ضمان أفضل سعر",
+      "quality": "جودة متفوقة",
+      "experience": "سنوات من الخبرة",
+      "customerService": "خدمة عملاء ممتازة",
+      "fastDelivery": "توصيل سريع/إنجاز سريع",
+      "warranty": "ضمانات قوية",
+      "localExpertise": "خبرة محلية",
+      "innovation": "حلول مبتكرة",
+      "other": "أخرى"
+    },
+    "otherUSPs": "يرجى تحديد نقاط البيع الفريدة الأخرى",
+    "tooltip": "اختر نقاط القوة الأقوى لديك. كن صادقًا - ستشكل هذه جوهر رسائل إعلاناتك."
+  },
+  "brandMaterials": {
+    "title": "ما هي مواد العلامة التجارية المتاحة لديك؟",
+    "materials": {
+      "logo": "ملفات الشعار (PNG، SVG، AI)",
+      "images": "صور المنتجات/الخدمات",
+      "videos": "محتوى فيديو",
+      "brandGuidelines": "إرشادات العلامة التجارية",
+      "existingAds": "إعلانات إبداعية موجودة",
+      "none": "لا شيء - بحاجة لمساعدة في الإنشاء"
+    },
+    "notes": "ملاحظات إضافية",
+    "notesPlaceholder": "مثال: ألوان العلامة التجارية هي الأزرق والأبيض، أسلوب حديث بسيط"
+  },
+  "campaignTimeline": {
+    "duration": "مدة الحملة المفضلة",
+    "durationOptions": {
+      "oneMonth": "تجربة لمدة شهر واحد",
+      "threeMonths": "3 أشهر",
+      "sixMonths": "6 أشهر",
+      "oneYear": "سنة واحدة",
+      "ongoing": "مستمر/بدون نهاية محددة",
+      "other": "أخرى"
+    },
+    "launchDate": "تاريخ الإطلاق المفضل",
+    "launchDateTooltip": "اختر تاريخ بدء واقعي. عادةً ما يستغرق إعداد الحساب والتحسين من 5-7 أيام عمل."
+  },
+  "additionalNotes": {
+    "title": "هل هناك أي شيء آخر يجب أن نعرفه؟",
+    "notesPlaceholder": "أضف أي معلومات إضافية أو متطلبات خاصة أو أسئلة"
+  },
+  "validation": {
+    "required": "هذا الحقل مطلوب",
+    "invalidEmail": "يرجى إدخال عنوان بريد إلكتروني صالح",
+    "invalidPhone": "يرجى إدخال رقم هاتف صالح",
+    "invalidUrl": "يرجى إدخال عنوان URL صالح"
+  },
+  "messages": {
+    "success": "شكرًا لك! تم إرسال النموذج بنجاح.",
+    "successDescription": "سيقوم فريقنا بمراجعة متطلباتك والعودة إليك في غضون 24 ساعة.",
+    "error": "عذرًا! حدث خطأ ما.",
+    "errorDescription": "يرجى المحاولة مرة أخرى أو الاتصال بنا مباشرة.",
+    "autoSaved": "تم حفظ المسودة تلقائيًا",
+    "draftRestored": "تمت استعادة المسودة السابقة"
+  },
+  "review": {
+    "title": "راجع إرسالك",
+    "subtitle": "يرجى مراجعة معلوماتك قبل الإرسال",
+    "edit": "تعديل",
+    "notProvided": "غير مقدم"
+  }
+}

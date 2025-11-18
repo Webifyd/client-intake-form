@@ -5,6 +5,8 @@ import type { IntakeFormData } from '@/types/form';
 import Image from 'next/image';
 import StepNavigation from './StepNavigation';
 import ReviewSummary from './ReviewSummary';
+import LanguageSwitcher from './LanguageSwitcher';
+import { useTranslations } from 'next-intl';
 
 // Tooltip component
 function Tooltip({ text }: { text: string }) {
@@ -96,6 +98,14 @@ const initialFormData: IntakeFormData = {
 };
 
 export default function IntakeForm() {
+  // Translation hooks
+  const t = useTranslations('app');
+  const tProgress = useTranslations('progress');
+  const tSections = useTranslations('sections');
+  const tCompanyInfo = useTranslations('companyInfo');
+  const tValidation = useTranslations('validation');
+  const tMessages = useTranslations('messages');
+
   const [formData, setFormData] = useState<IntakeFormData>(initialFormData);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<{
@@ -246,7 +256,7 @@ export default function IntakeForm() {
   const validateEmail = (email: string): string | null => {
     if (!email) return null;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email) ? null : 'Please enter a valid email address';
+    return emailRegex.test(email) ? null : tValidation('invalidEmail');
   };
 
   const validatePhone = (phone: string): string | null => {
@@ -254,7 +264,7 @@ export default function IntakeForm() {
     const phoneRegex = /^[\d\s\-\+\(\)]+$/;
     return phoneRegex.test(phone) && phone.replace(/\D/g, '').length >= 7
       ? null
-      : 'Please enter a valid phone number';
+      : tValidation('invalidPhone');
   };
 
   const validateURL = (url: string): string | null => {
@@ -263,7 +273,7 @@ export default function IntakeForm() {
       new URL(url.startsWith('http') ? url : `https://${url}`);
       return null;
     } catch {
-      return 'Please enter a valid URL (e.g., www.example.com)';
+      return tValidation('invalidUrl');
     }
   };
 
@@ -423,22 +433,31 @@ export default function IntakeForm() {
         <div className="bg-gradient-to-r from-webifyd-navy to-webifyd-blue text-white p-8 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full -mr-32 -mt-32"></div>
           <div className="relative z-10">
-            <div className="mb-6 inline-block bg-white px-6 py-3 rounded-lg shadow-lg">
-              <Image
-                src="/webifyd-logo-tp.png"
-                alt="Webifyd Technologies"
-                width={300}
-                height={90}
-                className="h-16 w-auto"
-              />
+            {/* Header Top Row - Logo and Language Switcher */}
+            <div className="flex justify-between items-start mb-6">
+              {/* Logo - always on the left in LTR, right in RTL */}
+              <div className="inline-block bg-white px-6 py-3 rounded-lg shadow-lg">
+                <Image
+                  src="/webifyd-logo-tp.png"
+                  alt="Webifyd Technologies"
+                  width={300}
+                  height={90}
+                  className="h-16 w-auto"
+                />
+              </div>
+
+              {/* Language Switcher - always on the right in LTR, left in RTL */}
+              <div className="flex-shrink-0">
+                <LanguageSwitcher />
+              </div>
             </div>
+
+            {/* Title and Tagline */}
             <h1 className="text-3xl md:text-4xl font-bold mb-3 text-white">
-              Google Ads Campaign
-              <br />
-              Client Intake & Strategy Form
+              {t('title')}
             </h1>
             <p className="text-blue-100 text-sm md:text-base">
-              Digital Solutions You Can Trust
+              {t('tagline')}
             </p>
           </div>
         </div>
@@ -454,7 +473,7 @@ export default function IntakeForm() {
           <div className="px-4 py-2 flex justify-between items-center text-sm">
             <div className="flex items-center gap-3">
               <span className="text-webifyd-gray-medium font-medium">
-                Section {currentSection} of 11
+                {tProgress('section', { current: currentSection, total: 11 })}
               </span>
               {lastSaved && (
                 <span className="text-xs text-green-600 flex items-center gap-1">
@@ -466,10 +485,10 @@ export default function IntakeForm() {
               )}
             </div>
             <span className="text-webifyd-blue font-semibold">
-              {calculateProgress()}% Complete
+              {tProgress('completion', { percentage: calculateProgress() })}
             </span>
             <span className="text-gray-500 text-xs hidden sm:inline">
-              ⏱️ Est. {Math.max(1, Math.ceil((100 - calculateProgress()) / 10))} min remaining
+              ⏱️ {tProgress('estimatedTime', { minutes: Math.max(1, Math.ceil((100 - calculateProgress()) / 10)) })}
             </span>
           </div>
         </div>
@@ -538,43 +557,47 @@ export default function IntakeForm() {
             {/* STEP 1: COMPANY INFORMATION */}
             {currentStep === 1 && (
             <section ref={(el) => { sectionRefs.current[0] = el; }}>
-              <h2 className="section-header rounded">COMPANY INFORMATION</h2>
+              <h2 className="section-header rounded">{tSections('companyInfo').toUpperCase()}</h2>
               <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="field-group">
-                  <label className="field-label">Company Name: *</label>
+                  <label className="field-label">{tCompanyInfo('companyName')}: *</label>
                   <input
                     type="text"
                     required
                     className="field-input"
+                    placeholder={tCompanyInfo('companyNamePlaceholder')}
                     value={formData.companyInfo.companyName}
                     onChange={(e) => handleInputChange('companyInfo', 'companyName', e.target.value)}
                   />
                 </div>
                 <div className="field-group">
-                  <label className="field-label">Contact Person: *</label>
+                  <label className="field-label">{tCompanyInfo('contactPerson')}: *</label>
                   <input
                     type="text"
                     required
                     className="field-input"
+                    placeholder={tCompanyInfo('contactPersonPlaceholder')}
                     value={formData.companyInfo.contactPerson}
                     onChange={(e) => handleInputChange('companyInfo', 'contactPerson', e.target.value)}
                   />
                 </div>
                 <div className="field-group">
-                  <label className="field-label">Position / Role:</label>
+                  <label className="field-label">{tCompanyInfo('position')}:</label>
                   <input
                     type="text"
                     className="field-input"
+                    placeholder={tCompanyInfo('positionPlaceholder')}
                     value={formData.companyInfo.position}
                     onChange={(e) => handleInputChange('companyInfo', 'position', e.target.value)}
                   />
                 </div>
                 <div className="field-group">
-                  <label className="field-label">Email: *</label>
+                  <label className="field-label">{tCompanyInfo('email')}: *</label>
                   <input
                     type="email"
                     required
                     className={`field-input ${fieldErrors['companyInfo.email'] ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''}`}
+                    placeholder={tCompanyInfo('emailPlaceholder')}
                     value={formData.companyInfo.email}
                     onChange={(e) => handleInputChange('companyInfo', 'email', e.target.value)}
                   />
@@ -588,10 +611,11 @@ export default function IntakeForm() {
                   )}
                 </div>
                 <div className="field-group">
-                  <label className="field-label">Phone / WhatsApp:</label>
+                  <label className="field-label">{tCompanyInfo('phone')}:</label>
                   <input
                     type="tel"
                     className={`field-input ${fieldErrors['companyInfo.phone'] ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''}`}
+                    placeholder={tCompanyInfo('phonePlaceholder')}
                     value={formData.companyInfo.phone}
                     onChange={(e) => handleInputChange('companyInfo', 'phone', e.target.value)}
                   />
@@ -605,10 +629,11 @@ export default function IntakeForm() {
                   )}
                 </div>
                 <div className="field-group">
-                  <label className="field-label">Website:</label>
+                  <label className="field-label">{tCompanyInfo('website')}:</label>
                   <input
                     type="url"
                     className={`field-input ${fieldErrors['companyInfo.website'] ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''}`}
+                    placeholder={tCompanyInfo('websitePlaceholder')}
                     value={formData.companyInfo.website}
                     onChange={(e) => handleInputChange('companyInfo', 'website', e.target.value)}
                   />
@@ -623,10 +648,11 @@ export default function IntakeForm() {
                 </div>
               </div>
               <div className="field-group mt-6">
-                <label className="field-label">Office Location:</label>
+                <label className="field-label">{tCompanyInfo('officeLocation')}:</label>
                 <input
                   type="text"
                   className="field-input"
+                  placeholder={tCompanyInfo('officeLocationPlaceholder')}
                   value={formData.companyInfo.officeLocation}
                   onChange={(e) => handleInputChange('companyInfo', 'officeLocation', e.target.value)}
                 />
