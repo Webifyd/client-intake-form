@@ -72,6 +72,8 @@ export default function IntakeForm() {
     message: string;
   }>({ type: null, message: '' });
   const [currentSection, setCurrentSection] = useState(1);
+  const [lastSaved, setLastSaved] = useState<Date | null>(null);
+  const [hasDraft, setHasDraft] = useState(false);
   const sectionRefs = useRef<(HTMLElement | null)[]>([]);
 
   // Calculate form completion percentage
@@ -97,6 +99,53 @@ export default function IntakeForm() {
 
     return Math.min(Math.round(requiredProgress + optionalProgress), 100);
   };
+
+  // Load saved draft on mount
+  useEffect(() => {
+    const savedDraft = localStorage.getItem('google-ads-intake-draft');
+    const savedTimestamp = localStorage.getItem('google-ads-intake-draft-timestamp');
+
+    if (savedDraft && savedTimestamp) {
+      const draftAge = Date.now() - parseInt(savedTimestamp);
+      const sevenDays = 7 * 24 * 60 * 60 * 1000;
+
+      // Only restore if draft is less than 7 days old
+      if (draftAge < sevenDays) {
+        try {
+          const parsedDraft = JSON.parse(savedDraft);
+          setFormData(parsedDraft);
+          setHasDraft(true);
+          setLastSaved(new Date(parseInt(savedTimestamp)));
+        } catch (error) {
+          console.error('Failed to restore draft:', error);
+          localStorage.removeItem('google-ads-intake-draft');
+          localStorage.removeItem('google-ads-intake-draft-timestamp');
+        }
+      } else {
+        // Clear old drafts
+        localStorage.removeItem('google-ads-intake-draft');
+        localStorage.removeItem('google-ads-intake-draft-timestamp');
+      }
+    }
+  }, []);
+
+  // Auto-save to localStorage every 30 seconds
+  useEffect(() => {
+    const autoSaveInterval = setInterval(() => {
+      // Only save if there's some data entered
+      const hasData = formData.companyInfo.companyName ||
+                      formData.companyInfo.email ||
+                      formData.campaignObjective.goals.length > 0;
+
+      if (hasData) {
+        localStorage.setItem('google-ads-intake-draft', JSON.stringify(formData));
+        localStorage.setItem('google-ads-intake-draft-timestamp', Date.now().toString());
+        setLastSaved(new Date());
+      }
+    }, 30000); // 30 seconds
+
+    return () => clearInterval(autoSaveInterval);
+  }, [formData]);
 
   // Track section visibility with Intersection Observer
   useEffect(() => {
@@ -163,6 +212,10 @@ export default function IntakeForm() {
     setSubmitStatus({ type: null, message: '' });
 
     try {
+      // Clear saved draft before submitting
+      localStorage.removeItem('google-ads-intake-draft');
+      localStorage.removeItem('google-ads-intake-draft-timestamp');
+
       const response = await fetch('/api/submit', {
         method: 'POST',
         headers: {
@@ -229,9 +282,19 @@ export default function IntakeForm() {
             ></div>
           </div>
           <div className="px-4 py-2 flex justify-between items-center text-sm">
-            <span className="text-webifyd-gray-medium font-medium">
-              Section {currentSection} of 11
-            </span>
+            <div className="flex items-center gap-3">
+              <span className="text-webifyd-gray-medium font-medium">
+                Section {currentSection} of 11
+              </span>
+              {lastSaved && (
+                <span className="text-xs text-green-600 flex items-center gap-1">
+                  <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                  Saved {lastSaved.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                </span>
+              )}
+            </div>
             <span className="text-webifyd-blue font-semibold">
               {calculateProgress()}% Complete
             </span>
@@ -243,11 +306,26 @@ export default function IntakeForm() {
 
         {/* Intro Box */}
         <div className="p-8">
+          {/* Draft Restored Banner */}
+          {hasDraft && (
+            <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-4 rounded-r">
+              <p className="text-yellow-800 text-sm font-medium flex items-center gap-2">
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                </svg>
+                Your previous draft has been restored! Continue where you left off.
+              </p>
+            </div>
+          )}
+
           <div className="bg-blue-50 border-l-4 border-webifyd-blue p-4 mb-8 rounded-r">
             <p className="text-webifyd-gray-medium text-sm leading-relaxed">
               This intake form is designed to collect the essential information required to plan, execute,
               and optimize a Google Ads campaign. Please provide as much detail as possible so we can align
               campaign strategy with your business goals and target audience.
+            </p>
+            <p className="text-webifyd-gray-medium text-xs mt-2 opacity-75">
+              💾 Your progress is automatically saved every 30 seconds
             </p>
           </div>
 
