@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import type { IntakeFormData } from '@/types/form';
 import Image from 'next/image';
 
@@ -71,6 +71,55 @@ export default function IntakeForm() {
     type: 'success' | 'error' | null;
     message: string;
   }>({ type: null, message: '' });
+  const [currentSection, setCurrentSection] = useState(1);
+  const sectionRefs = useRef<(HTMLElement | null)[]>([]);
+
+  // Calculate form completion percentage
+  const calculateProgress = () => {
+    const requiredFields = [
+      formData.companyInfo.companyName,
+      formData.companyInfo.contactPerson,
+      formData.companyInfo.email,
+    ];
+
+    const optionalFilledFields = [
+      formData.campaignObjective.goals.length > 0,
+      formData.targetAudience.customerTypes.length > 0,
+      formData.targetAudience.geographicTargeting.length > 0,
+      formData.campaignBudget.dailyBudget || formData.campaignBudget.otherBudget,
+      formData.productsServices.coreProducts,
+      formData.leadDefinition.leadTypes.length > 0,
+    ].filter(Boolean).length;
+
+    const totalRequired = requiredFields.filter(Boolean).length;
+    const requiredProgress = (totalRequired / requiredFields.length) * 60; // 60% for required
+    const optionalProgress = (optionalFilledFields / 6) * 40; // 40% for optional key fields
+
+    return Math.min(Math.round(requiredProgress + optionalProgress), 100);
+  };
+
+  // Track section visibility with Intersection Observer
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const sectionIndex = sectionRefs.current.indexOf(entry.target as HTMLElement);
+            if (sectionIndex !== -1) {
+              setCurrentSection(sectionIndex + 1);
+            }
+          }
+        });
+      },
+      { threshold: 0.5, rootMargin: '-100px' }
+    );
+
+    sectionRefs.current.forEach((ref) => {
+      if (ref) observer.observe(ref);
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   const handleCheckboxChange = (
     section: keyof IntakeFormData,
@@ -171,6 +220,27 @@ export default function IntakeForm() {
           </div>
         </div>
 
+        {/* Progress Bar */}
+        <div className="sticky top-0 z-50 bg-white shadow-md">
+          <div className="h-2 bg-gray-200">
+            <div
+              className="h-2 bg-webifyd-blue transition-all duration-300 ease-in-out"
+              style={{ width: `${calculateProgress()}%` }}
+            ></div>
+          </div>
+          <div className="px-4 py-2 flex justify-between items-center text-sm">
+            <span className="text-webifyd-gray-medium font-medium">
+              Section {currentSection} of 11
+            </span>
+            <span className="text-webifyd-blue font-semibold">
+              {calculateProgress()}% Complete
+            </span>
+            <span className="text-gray-500 text-xs hidden sm:inline">
+              ⏱️ Est. {Math.max(1, Math.ceil((100 - calculateProgress()) / 10))} min remaining
+            </span>
+          </div>
+        </div>
+
         {/* Intro Box */}
         <div className="p-8">
           <div className="bg-blue-50 border-l-4 border-webifyd-blue p-4 mb-8 rounded-r">
@@ -196,7 +266,7 @@ export default function IntakeForm() {
 
           <form onSubmit={handleSubmit} className="space-y-8">
             {/* COMPANY INFORMATION */}
-            <section>
+            <section ref={(el) => (sectionRefs.current[0] = el)}>
               <h2 className="section-header rounded">COMPANY INFORMATION</h2>
               <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="field-group">
@@ -269,7 +339,7 @@ export default function IntakeForm() {
             </section>
 
             {/* CAMPAIGN OBJECTIVE */}
-            <section>
+            <section ref={(el) => (sectionRefs.current[1] = el)}>
               <h2 className="section-header rounded">CAMPAIGN OBJECTIVE</h2>
               <div className="mt-6">
                 <p className="subsection">Select the primary campaign goal:</p>
@@ -312,7 +382,7 @@ export default function IntakeForm() {
             </section>
 
             {/* TARGET AUDIENCE & LOCATION */}
-            <section>
+            <section ref={(el) => (sectionRefs.current[2] = el)}>
               <h2 className="section-header rounded">TARGET AUDIENCE & LOCATION</h2>
               <div className="mt-6">
                 <p className="subsection">Who are your ideal customers?</p>
@@ -416,7 +486,7 @@ export default function IntakeForm() {
             </section>
 
             {/* CAMPAIGN BUDGET */}
-            <section>
+            <section ref={(el) => (sectionRefs.current[3] = el)}>
               <h2 className="section-header rounded">CAMPAIGN BUDGET</h2>
               <div className="mt-6">
                 <p className="subsection">Daily budget (Approximate):</p>
@@ -463,7 +533,7 @@ export default function IntakeForm() {
             </section>
 
             {/* PRODUCTS OR SERVICES */}
-            <section>
+            <section ref={(el) => (sectionRefs.current[4] = el)}>
               <h2 className="section-header rounded">PRODUCTS OR SERVICES TO PROMOTE</h2>
               <div className="mt-6 space-y-6">
                 <div className="field-group">
@@ -501,7 +571,7 @@ export default function IntakeForm() {
             </section>
 
             {/* LEAD & CONVERSION DEFINITION */}
-            <section>
+            <section ref={(el) => (sectionRefs.current[5] = el)}>
               <h2 className="section-header rounded">LEAD & CONVERSION DEFINITION</h2>
               <div className="mt-6">
                 <p className="subsection">What counts as a lead for you?</p>
@@ -541,7 +611,7 @@ export default function IntakeForm() {
             </section>
 
             {/* KEYWORDS & COMPETITORS */}
-            <section>
+            <section ref={(el) => (sectionRefs.current[6] = el)}>
               <h2 className="section-header rounded">KEYWORDS & COMPETITORS</h2>
               <div className="mt-6 space-y-6">
                 <div className="field-group">
@@ -578,7 +648,7 @@ export default function IntakeForm() {
             </section>
 
             {/* UNIQUE SELLING POINTS */}
-            <section>
+            <section ref={(el) => (sectionRefs.current[7] = el)}>
               <h2 className="section-header rounded">UNIQUE SELLING POINTS (USPs)</h2>
               <div className="mt-6">
                 <p className="subsection">Select all that apply to your business:</p>
@@ -620,7 +690,7 @@ export default function IntakeForm() {
             </section>
 
             {/* ASSETS & BRAND MATERIALS */}
-            <section>
+            <section ref={(el) => (sectionRefs.current[8] = el)}>
               <h2 className="section-header rounded">ASSETS & BRAND MATERIALS</h2>
               <div className="mt-6">
                 <p className="subsection">Please provide the following materials:</p>
@@ -657,7 +727,7 @@ export default function IntakeForm() {
             </section>
 
             {/* CAMPAIGN TIMELINE */}
-            <section>
+            <section ref={(el) => (sectionRefs.current[9] = el)}>
               <h2 className="section-header rounded">CAMPAIGN TIMELINE</h2>
               <div className="mt-6">
                 <p className="subsection">Preferred campaign duration:</p>
@@ -695,7 +765,7 @@ export default function IntakeForm() {
             </section>
 
             {/* ADDITIONAL NOTES */}
-            <section>
+            <section ref={(el) => (sectionRefs.current[10] = el)}>
               <h2 className="section-header rounded">ADDITIONAL NOTES & INSTRUCTIONS</h2>
               <div className="mt-6">
                 <div className="field-group">
