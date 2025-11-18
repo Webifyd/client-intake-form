@@ -6,7 +6,8 @@ A professional web application for collecting Google Ads campaign requirements f
 
 - ✅ **Comprehensive Intake Form** - Collects all necessary information for Google Ads campaigns
 - ✅ **Airtable Integration** - Automatically saves submissions to your Airtable base
-- ✅ **Email Notifications** - Sends detailed email to your team and confirmation to client
+- ✅ **Airtable Automations** - Configure email notifications and workflows in Airtable
+- ✅ **AI-Powered Analysis** - Generate strategic insights using Airtable AI fields
 - ✅ **Responsive Design** - Works perfectly on desktop, tablet, and mobile
 - ✅ **Webifyd Branding** - Matches your brand guidelines with blue color scheme
 - ✅ **Form Validation** - Ensures required fields are completed
@@ -17,8 +18,7 @@ A professional web application for collecting Google Ads campaign requirements f
 - **Framework:** Next.js 14 (App Router)
 - **Language:** TypeScript
 - **Styling:** Tailwind CSS
-- **Database:** Airtable
-- **Email:** Nodemailer
+- **Database:** Airtable (with AI capabilities)
 - **Deployment:** Vercel (recommended)
 
 ## Prerequisites
@@ -26,8 +26,8 @@ A professional web application for collecting Google Ads campaign requirements f
 Before you begin, ensure you have:
 
 - Node.js 18+ installed
-- An Airtable account and API key
-- SMTP email credentials (Gmail, SendGrid, etc.)
+- An Airtable account with API access
+- Airtable Personal Access Token with read/write permissions
 
 ## Installation
 
@@ -49,17 +49,12 @@ Before you begin, ensure you have:
 
    ```env
    # Airtable Configuration
-   AIRTABLE_API_KEY=your_airtable_api_key_here
+   AIRTABLE_API_KEY=your_airtable_personal_access_token_here
    AIRTABLE_BASE_ID=your_base_id_here
    AIRTABLE_TABLE_NAME=Google_Ads_Intake
-
-   # Email Configuration
-   SMTP_HOST=smtp.gmail.com
-   SMTP_PORT=587
-   SMTP_USER=your_email@gmail.com
-   SMTP_PASS=your_app_password_here
-   NOTIFICATION_EMAIL=recipient@example.com
    ```
+
+   **Note:** Email notifications are handled through Airtable Automations (not in code).
 
 ## Airtable Setup
 
@@ -117,37 +112,41 @@ Create these fields in your Airtable table (all as "Single line text" unless spe
 
 **Timeline:**
 - Campaign Duration
-- Launch Date (Date)
+- Launch Date (Single line text)
 
 **Additional:**
 - Additional Notes (Long text)
-- Submission Date (Date & Time)
+
+**Recommended Additional Fields:**
+- Created time (Created time) - Auto-tracks submission
+- Status (Single select) - Track workflow status
+- Campaign Analysis (AI text) - Generate strategic insights
 
 ### 3. Get Your API Credentials
 
-1. Go to [Airtable Account](https://airtable.com/account)
-2. Generate a Personal Access Token with the following scopes:
+1. Go to [Airtable Tokens](https://airtable.com/create/tokens)
+2. Click "Create new token"
+3. Name it: "Google Ads Intake Form"
+4. Add scopes:
    - `data.records:read`
    - `data.records:write`
-3. Copy your Base ID from the URL: `https://airtable.com/appXXXXXXXXXXXXXX/...`
+5. Add access to your specific base
+6. Create token and copy it (starts with `pat...`)
+7. Get your Base ID from the URL: `https://airtable.com/appXXXXXXXXXXXXXX/...`
    - The `appXXXXXXXXXXXXXX` part is your Base ID
 
-## Email Setup
+## Email Notifications Setup (Optional)
 
-### Using Gmail
+Email notifications are handled by **Airtable Automations**:
 
-1. Enable 2-Factor Authentication on your Google account
-2. Generate an App Password:
-   - Go to Google Account → Security → 2-Step Verification → App passwords
-   - Generate a new app password for "Mail"
-   - Use this password in your `.env.local` file
+1. In your Airtable base, click "Automations"
+2. Create new automation:
+   - **Trigger:** When record is created
+   - **Action:** Send email
+3. Configure email template with record fields
+4. Add recipients (your team, client CC)
 
-### Using Other SMTP Services
-
-Update the SMTP settings in `.env.local`:
-- **SendGrid:** `smtp.sendgrid.net` (Port 587)
-- **Mailgun:** `smtp.mailgun.org` (Port 587)
-- **AWS SES:** `email-smtp.region.amazonaws.com` (Port 587)
+See `AIRTABLE_AI_PROMPT.md` for AI-powered campaign analysis setup.
 
 ## Development
 
@@ -204,7 +203,10 @@ google-ad-intake-form/
 │   └── form.ts                   # TypeScript type definitions
 ├── .env.example                  # Environment variables template
 ├── .gitignore
-├── brandbook.md                  # Webifyd brand guidelines
+├── claude.md                     # AI assistant context & documentation
+├── FEATURE_IMPROVEMENTS.md       # Roadmap of 35+ enhancement ideas
+├── AIRTABLE_AI_PROMPT.md         # AI prompts for campaign analysis
+├── AIRTABLE_SETUP_GUIDE.md       # Complete Airtable configuration
 ├── next.config.js
 ├── package.json
 ├── postcss.config.js
@@ -232,9 +234,9 @@ colors: {
 
 Edit `components/IntakeForm.tsx` and `types/form.ts` to add or remove fields.
 
-### Email Template
+### Email Templates
 
-Customize the email template in `app/api/submit/route.ts` in the `generateEmailHTML()` function.
+Configure email templates in Airtable Automations using the record fields.
 
 ## Testing
 
@@ -242,20 +244,21 @@ Customize the email template in `app/api/submit/route.ts` in the `generateEmailH
 
 1. Fill out the form with test data
 2. Check your Airtable base for the new record
-3. Check your email inbox for the notification
-4. Verify the client received a confirmation email
+3. Verify all fields are populated correctly
+4. Test Airtable automations (emails, AI analysis)
 
 ### Common Issues
 
 **Airtable Error:**
-- Verify your API key and Base ID are correct
-- Ensure all field names in the code match your Airtable exactly
-- Check that your API token has write permissions
+- Verify your Personal Access Token and Base ID are correct
+- Ensure all field names in the code match your Airtable exactly (case-sensitive)
+- Check that your API token has read AND write permissions
+- See `AIRTABLE_SETUP_GUIDE.md` for complete field list
 
 **Email Not Sending:**
-- For Gmail, make sure you're using an App Password, not your regular password
-- Check spam/junk folders
-- Verify SMTP settings are correct for your provider
+- Emails are configured in Airtable Automations, not in code
+- Check Airtable automation run history
+- Verify email addresses in automation settings
 
 **Build Errors:**
 - Run `npm install` to ensure all dependencies are installed
