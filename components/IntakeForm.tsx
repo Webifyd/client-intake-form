@@ -74,6 +74,7 @@ export default function IntakeForm() {
   const [currentSection, setCurrentSection] = useState(1);
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
   const [hasDraft, setHasDraft] = useState(false);
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const sectionRefs = useRef<(HTMLElement | null)[]>([]);
 
   // Calculate form completion percentage
@@ -192,6 +193,54 @@ export default function IntakeForm() {
     });
   };
 
+  // Validation functions
+  const validateEmail = (email: string): string | null => {
+    if (!email) return null;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email) ? null : 'Please enter a valid email address';
+  };
+
+  const validatePhone = (phone: string): string | null => {
+    if (!phone) return null;
+    const phoneRegex = /^[\d\s\-\+\(\)]+$/;
+    return phoneRegex.test(phone) && phone.replace(/\D/g, '').length >= 7
+      ? null
+      : 'Please enter a valid phone number';
+  };
+
+  const validateURL = (url: string): string | null => {
+    if (!url) return null;
+    try {
+      new URL(url.startsWith('http') ? url : `https://${url}`);
+      return null;
+    } catch {
+      return 'Please enter a valid URL (e.g., www.example.com)';
+    }
+  };
+
+  const validateField = (section: string, field: string, value: string) => {
+    const fieldKey = `${section}.${field}`;
+    let error: string | null = null;
+
+    if (field === 'email') {
+      error = validateEmail(value);
+    } else if (field === 'phone') {
+      error = validatePhone(value);
+    } else if (field === 'website' || field === 'catalogLink') {
+      error = validateURL(value);
+    }
+
+    setFieldErrors((prev) => {
+      const newErrors = { ...prev };
+      if (error) {
+        newErrors[fieldKey] = error;
+      } else {
+        delete newErrors[fieldKey];
+      }
+      return newErrors;
+    });
+  };
+
   const handleInputChange = (
     section: keyof IntakeFormData,
     field: string,
@@ -204,10 +253,23 @@ export default function IntakeForm() {
         [field]: value,
       },
     }));
+
+    // Validate on change
+    validateField(section, field, value);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Check for validation errors before submitting
+    if (Object.keys(fieldErrors).length > 0) {
+      setSubmitStatus({
+        type: 'error',
+        message: 'Please fix all validation errors before submitting.',
+      });
+      return;
+    }
+
     setIsSubmitting(true);
     setSubmitStatus({ type: null, message: '' });
 
@@ -381,28 +443,52 @@ export default function IntakeForm() {
                   <input
                     type="email"
                     required
-                    className="field-input"
+                    className={`field-input ${fieldErrors['companyInfo.email'] ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''}`}
                     value={formData.companyInfo.email}
                     onChange={(e) => handleInputChange('companyInfo', 'email', e.target.value)}
                   />
+                  {fieldErrors['companyInfo.email'] && (
+                    <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
+                      <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                      </svg>
+                      {fieldErrors['companyInfo.email']}
+                    </p>
+                  )}
                 </div>
                 <div className="field-group">
                   <label className="field-label">Phone / WhatsApp:</label>
                   <input
                     type="tel"
-                    className="field-input"
+                    className={`field-input ${fieldErrors['companyInfo.phone'] ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''}`}
                     value={formData.companyInfo.phone}
                     onChange={(e) => handleInputChange('companyInfo', 'phone', e.target.value)}
                   />
+                  {fieldErrors['companyInfo.phone'] && (
+                    <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
+                      <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                      </svg>
+                      {fieldErrors['companyInfo.phone']}
+                    </p>
+                  )}
                 </div>
                 <div className="field-group">
                   <label className="field-label">Website:</label>
                   <input
                     type="url"
-                    className="field-input"
+                    className={`field-input ${fieldErrors['companyInfo.website'] ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''}`}
                     value={formData.companyInfo.website}
                     onChange={(e) => handleInputChange('companyInfo', 'website', e.target.value)}
                   />
+                  {fieldErrors['companyInfo.website'] && (
+                    <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
+                      <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                      </svg>
+                      {fieldErrors['companyInfo.website']}
+                    </p>
+                  )}
                 </div>
               </div>
               <div className="field-group mt-6">
@@ -628,12 +714,20 @@ export default function IntakeForm() {
                   <label className="field-label">Product catalog link or upload reference:</label>
                   <input
                     type="url"
-                    className="field-input"
+                    className={`field-input ${fieldErrors['productsServices.catalogLink'] ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''}`}
                     value={formData.productsServices.catalogLink}
                     onChange={(e) =>
                       handleInputChange('productsServices', 'catalogLink', e.target.value)
                     }
                   />
+                  {fieldErrors['productsServices.catalogLink'] && (
+                    <p className="text-red-600 text-xs mt-1 flex items-center gap-1">
+                      <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                      </svg>
+                      {fieldErrors['productsServices.catalogLink']}
+                    </p>
+                  )}
                 </div>
                 <div className="field-group">
                   <label className="field-label">High-margin or focus products to prioritize:</label>
