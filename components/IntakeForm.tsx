@@ -970,15 +970,22 @@ export default function IntakeForm() {
                   ))}
                 </div>
                 <div className="field-group mt-6">
-                  <label className="field-label">Preferred campaign launch date:</label>
+                  <label className="field-label flex items-center">
+                    Preferred campaign launch date:
+                    <Tooltip text="Select your ideal start date. We recommend allowing 5-7 business days for campaign setup and optimization." />
+                  </label>
                   <input
                     type="date"
                     className="field-input"
+                    min={new Date().toISOString().split('T')[0]}
                     value={formData.campaignTimeline.launchDate}
                     onChange={(e) =>
                       handleInputChange('campaignTimeline', 'launchDate', e.target.value)
                     }
                   />
+                  <p className="text-xs text-gray-500 mt-1">
+                    📅 Click to open calendar picker. Past dates are disabled.
+                  </p>
                 </div>
               </div>
             </section>
