@@ -449,7 +449,7 @@ export default function IntakeForm() {
 
           <form onSubmit={handleSubmit} className="space-y-8">
             {/* COMPANY INFORMATION */}
-            <section ref={(el) => (sectionRefs.current[0] = el)}>
+            <section ref={(el) => { sectionRefs.current[0] = el; }}>
               <h2 className="section-header rounded">COMPANY INFORMATION</h2>
               <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="field-group">
@@ -546,7 +546,7 @@ export default function IntakeForm() {
             </section>
 
             {/* CAMPAIGN OBJECTIVE */}
-            <section ref={(el) => (sectionRefs.current[1] = el)}>
+            <section ref={(el) => { sectionRefs.current[1] = el; }}>
               <h2 className="section-header rounded">CAMPAIGN OBJECTIVE</h2>
               <div className="mt-6">
                 <p className="subsection">Select the primary campaign goal:</p>
@@ -593,7 +593,7 @@ export default function IntakeForm() {
             </section>
 
             {/* TARGET AUDIENCE & LOCATION */}
-            <section ref={(el) => (sectionRefs.current[2] = el)}>
+            <section ref={(el) => { sectionRefs.current[2] = el; }}>
               <h2 className="section-header rounded">TARGET AUDIENCE & LOCATION</h2>
               <div className="mt-6">
                 <p className="subsection">Who are your ideal customers?</p>
@@ -697,7 +697,7 @@ export default function IntakeForm() {
             </section>
 
             {/* CAMPAIGN BUDGET */}
-            <section ref={(el) => (sectionRefs.current[3] = el)}>
+            <section ref={(el) => { sectionRefs.current[3] = el; }}>
               <h2 className="section-header rounded">CAMPAIGN BUDGET</h2>
               <div className="mt-6">
                 <p className="subsection flex items-center">
@@ -747,7 +747,7 @@ export default function IntakeForm() {
             </section>
 
             {/* PRODUCTS OR SERVICES */}
-            <section ref={(el) => (sectionRefs.current[4] = el)}>
+            <section ref={(el) => { sectionRefs.current[4] = el; }}>
               <h2 className="section-header rounded">PRODUCTS OR SERVICES TO PROMOTE</h2>
               <div className="mt-6 space-y-6">
                 <div className="field-group">
@@ -793,7 +793,7 @@ export default function IntakeForm() {
             </section>
 
             {/* LEAD & CONVERSION DEFINITION */}
-            <section ref={(el) => (sectionRefs.current[5] = el)}>
+            <section ref={(el) => { sectionRefs.current[5] = el; }}>
               <h2 className="section-header rounded">LEAD & CONVERSION DEFINITION</h2>
               <div className="mt-6">
                 <p className="subsection">What counts as a lead for you?</p>
@@ -833,7 +833,7 @@ export default function IntakeForm() {
             </section>
 
             {/* KEYWORDS & COMPETITORS */}
-            <section ref={(el) => (sectionRefs.current[6] = el)}>
+            <section ref={(el) => { sectionRefs.current[6] = el; }}>
               <h2 className="section-header rounded">KEYWORDS & COMPETITORS</h2>
               <div className="mt-6 space-y-6">
                 <div className="field-group">
@@ -878,7 +878,7 @@ export default function IntakeForm() {
             </section>
 
             {/* UNIQUE SELLING POINTS */}
-            <section ref={(el) => (sectionRefs.current[7] = el)}>
+            <section ref={(el) => { sectionRefs.current[7] = el; }}>
               <h2 className="section-header rounded">UNIQUE SELLING POINTS (USPs)</h2>
               <div className="mt-6">
                 <p className="subsection flex items-center">
@@ -923,7 +923,7 @@ export default function IntakeForm() {
             </section>
 
             {/* ASSETS & BRAND MATERIALS */}
-            <section ref={(el) => (sectionRefs.current[8] = el)}>
+            <section ref={(el) => { sectionRefs.current[8] = el; }}>
               <h2 className="section-header rounded">ASSETS & BRAND MATERIALS</h2>
               <div className="mt-6">
                 <p className="subsection">Please provide the following materials:</p>
@@ -960,7 +960,7 @@ export default function IntakeForm() {
             </section>
 
             {/* CAMPAIGN TIMELINE */}
-            <section ref={(el) => (sectionRefs.current[9] = el)}>
+            <section ref={(el) => { sectionRefs.current[9] = el; }}>
               <h2 className="section-header rounded">CAMPAIGN TIMELINE</h2>
               <div className="mt-6">
                 <p className="subsection">Preferred campaign duration:</p>
@@ -1005,7 +1005,7 @@ export default function IntakeForm() {
             </section>
 
             {/* ADDITIONAL NOTES */}
-            <section ref={(el) => (sectionRefs.current[10] = el)}>
+            <section ref={(el) => { sectionRefs.current[10] = el; }}>
               <h2 className="section-header rounded">ADDITIONAL NOTES & INSTRUCTIONS</h2>
               <div className="mt-6">
                 <div className="field-group">
