@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import type { IntakeFormData } from '@/types/form';
 import Image from 'next/image';
 import StepNavigation from './StepNavigation';
+import ReviewSummary from './ReviewSummary';
 
 // Tooltip component
 function Tooltip({ text }: { text: string }) {
@@ -1127,7 +1128,8 @@ export default function IntakeForm() {
               </div>
             </section>
 
-            {/* Review Summary - to be added in next task */}
+            {/* Review Summary */}
+            <ReviewSummary formData={formData} onEdit={handleStepClick} />
 
             {/* Submit Button (only for step 5) */}
             {currentStep === 5 && (
