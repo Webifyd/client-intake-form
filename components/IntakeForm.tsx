@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import type { IntakeFormData } from '@/types/form';
 import Image from 'next/image';
+import StepNavigation from './StepNavigation';
 
 // Tooltip component
 function Tooltip({ text }: { text: string }) {
@@ -101,6 +102,8 @@ export default function IntakeForm() {
     message: string;
   }>({ type: null, message: '' });
   const [currentSection, setCurrentSection] = useState(1);
+  const [currentStep, setCurrentStep] = useState(1); // 1-5 for multi-step
+  const [completedSteps, setCompletedSteps] = useState<number[]>([]);
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
   const [hasDraft, setHasDraft] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
@@ -146,15 +149,29 @@ export default function IntakeForm() {
           setFormData(parsedDraft);
           setHasDraft(true);
           setLastSaved(new Date(parseInt(savedTimestamp)));
+
+          // Restore step position
+          const savedStep = localStorage.getItem('google-ads-intake-current-step');
+          const savedCompletedSteps = localStorage.getItem('google-ads-intake-completed-steps');
+          if (savedStep) {
+            setCurrentStep(parseInt(savedStep));
+          }
+          if (savedCompletedSteps) {
+            setCompletedSteps(JSON.parse(savedCompletedSteps));
+          }
         } catch (error) {
           console.error('Failed to restore draft:', error);
           localStorage.removeItem('google-ads-intake-draft');
           localStorage.removeItem('google-ads-intake-draft-timestamp');
+          localStorage.removeItem('google-ads-intake-current-step');
+          localStorage.removeItem('google-ads-intake-completed-steps');
         }
       } else {
         // Clear old drafts
         localStorage.removeItem('google-ads-intake-draft');
         localStorage.removeItem('google-ads-intake-draft-timestamp');
+        localStorage.removeItem('google-ads-intake-current-step');
+        localStorage.removeItem('google-ads-intake-completed-steps');
       }
     }
   }, []);
@@ -170,12 +187,14 @@ export default function IntakeForm() {
       if (hasData) {
         localStorage.setItem('google-ads-intake-draft', JSON.stringify(formData));
         localStorage.setItem('google-ads-intake-draft-timestamp', Date.now().toString());
+        localStorage.setItem('google-ads-intake-current-step', currentStep.toString());
+        localStorage.setItem('google-ads-intake-completed-steps', JSON.stringify(completedSteps));
         setLastSaved(new Date());
       }
     }, 30000); // 30 seconds
 
     return () => clearInterval(autoSaveInterval);
-  }, [formData]);
+  }, [formData, currentStep, completedSteps]);
 
   // Track section visibility with Intersection Observer
   useEffect(() => {
@@ -287,6 +306,65 @@ export default function IntakeForm() {
     validateField(section, field, value);
   };
 
+  // Step validation
+  const validateStep = (step: number): boolean => {
+    switch (step) {
+      case 1: // Company Information
+        return !!(
+          formData.companyInfo.companyName &&
+          formData.companyInfo.contactPerson &&
+          formData.companyInfo.email &&
+          !fieldErrors['companyInfo.email']
+        );
+      case 2: // Campaign Details - optional, always valid
+        return true;
+      case 3: // Budget & Products - optional, always valid
+        return true;
+      case 4: // Strategy & Content - optional, always valid
+        return true;
+      case 5: // Review & Submit
+        return validateStep(1); // Must have company info to submit
+      default:
+        return true;
+    }
+  };
+
+  // Navigate to next step
+  const handleNextStep = () => {
+    if (validateStep(currentStep)) {
+      // Mark current step as completed
+      if (!completedSteps.includes(currentStep)) {
+        setCompletedSteps([...completedSteps, currentStep]);
+      }
+      // Move to next step
+      if (currentStep < 5) {
+        setCurrentStep(currentStep + 1);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    } else {
+      setSubmitStatus({
+        type: 'error',
+        message: 'Please fill in all required fields before continuing.',
+      });
+      // Clear error after 5 seconds
+      setTimeout(() => setSubmitStatus({ type: null, message: '' }), 5000);
+    }
+  };
+
+  // Navigate to previous step
+  const handlePreviousStep = () => {
+    if (currentStep > 1) {
+      setCurrentStep(currentStep - 1);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  // Navigate to specific step (from stepper)
+  const handleStepClick = (step: number) => {
+    setCurrentStep(step);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -395,6 +473,14 @@ export default function IntakeForm() {
           </div>
         </div>
 
+        {/* Step Navigation */}
+        <StepNavigation
+          currentStep={currentStep}
+          totalSteps={5}
+          onStepClick={handleStepClick}
+          completedSteps={completedSteps}
+        />
+
         {/* Intro Box */}
         <div className="p-8">
           {/* Draft Restored Banner */}
@@ -448,7 +534,8 @@ export default function IntakeForm() {
           )}
 
           <form onSubmit={handleSubmit} className="space-y-8">
-            {/* COMPANY INFORMATION */}
+            {/* STEP 1: COMPANY INFORMATION */}
+            {currentStep === 1 && (
             <section ref={(el) => { sectionRefs.current[0] = el; }}>
               <h2 className="section-header rounded">COMPANY INFORMATION</h2>
               <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -544,7 +631,11 @@ export default function IntakeForm() {
                 />
               </div>
             </section>
+            )}
 
+            {/* STEP 2: CAMPAIGN DETAILS */}
+            {currentStep === 2 && (
+            <>
             {/* CAMPAIGN OBJECTIVE */}
             <section ref={(el) => { sectionRefs.current[1] = el; }}>
               <h2 className="section-header rounded">CAMPAIGN OBJECTIVE</h2>
@@ -695,7 +786,12 @@ export default function IntakeForm() {
                 </div>
               </div>
             </section>
+            </>
+            )}
 
+            {/* STEP 3: BUDGET & PRODUCTS */}
+            {currentStep === 3 && (
+            <>
             {/* CAMPAIGN BUDGET */}
             <section ref={(el) => { sectionRefs.current[3] = el; }}>
               <h2 className="section-header rounded">CAMPAIGN BUDGET</h2>
@@ -791,7 +887,12 @@ export default function IntakeForm() {
                 </div>
               </div>
             </section>
+            </>
+            )}
 
+            {/* STEP 4: STRATEGY & CONTENT */}
+            {currentStep === 4 && (
+            <>
             {/* LEAD & CONVERSION DEFINITION */}
             <section ref={(el) => { sectionRefs.current[5] = el; }}>
               <h2 className="section-header rounded">LEAD & CONVERSION DEFINITION</h2>
@@ -1003,7 +1104,12 @@ export default function IntakeForm() {
                 </div>
               </div>
             </section>
+            </>
+            )}
 
+            {/* STEP 5: REVIEW & SUBMIT */}
+            {currentStep === 5 && (
+            <>
             {/* ADDITIONAL NOTES */}
             <section ref={(el) => { sectionRefs.current[10] = el; }}>
               <h2 className="section-header rounded">ADDITIONAL NOTES & INSTRUCTIONS</h2>
@@ -1021,7 +1127,10 @@ export default function IntakeForm() {
               </div>
             </section>
 
-            {/* Submit Button */}
+            {/* Review Summary - to be added in next task */}
+
+            {/* Submit Button (only for step 5) */}
+            {currentStep === 5 && (
             <div className="flex justify-center pt-8 pb-4">
               <button
                 type="submit"
@@ -1054,6 +1163,41 @@ export default function IntakeForm() {
                 )}
                 {isSubmitting ? 'Submitting Your Form...' : 'Submit Intake Form'}
               </button>
+            </div>
+            )}
+            </>
+            )}
+
+            {/* Step Navigation Buttons */}
+            <div className="flex justify-between items-center pt-8 pb-4 border-t border-gray-200 mt-8">
+              <button
+                type="button"
+                onClick={handlePreviousStep}
+                disabled={currentStep === 1}
+                className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all ${
+                  currentStep === 1
+                    ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                    : 'bg-gray-500 text-white hover:bg-gray-600 hover:scale-105'
+                }`}
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+                Previous
+              </button>
+
+              {currentStep < 5 && (
+                <button
+                  type="button"
+                  onClick={handleNextStep}
+                  className="flex items-center gap-2 bg-webifyd-blue text-white px-8 py-3 rounded-lg font-semibold hover:bg-webifyd-navy transition-all hover:scale-105"
+                >
+                  Next Step
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+              )}
             </div>
           </form>
 
