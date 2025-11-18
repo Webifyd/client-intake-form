@@ -4,6 +4,35 @@ import { useState, useEffect, useRef } from 'react';
 import type { IntakeFormData } from '@/types/form';
 import Image from 'next/image';
 
+// Tooltip component
+function Tooltip({ text }: { text: string }) {
+  const [show, setShow] = useState(false);
+
+  return (
+    <div className="relative inline-block ml-1">
+      <button
+        type="button"
+        className="text-webifyd-blue hover:text-webifyd-navy transition-colors"
+        onMouseEnter={() => setShow(true)}
+        onMouseLeave={() => setShow(false)}
+        onClick={() => setShow(!show)}
+      >
+        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+          <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+        </svg>
+      </button>
+      {show && (
+        <div className="absolute z-10 w-64 p-2 text-xs text-white bg-gray-900 rounded-lg shadow-lg bottom-full left-1/2 transform -translate-x-1/2 mb-2">
+          {text}
+          <div className="absolute top-full left-1/2 transform -translate-x-1/2 -mt-1">
+            <div className="border-4 border-transparent border-t-gray-900"></div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 const initialFormData: IntakeFormData = {
   companyInfo: {
     companyName: '',
@@ -533,9 +562,13 @@ export default function IntakeForm() {
                 </div>
 
                 <div className="field-group mt-6">
-                  <label className="field-label">Describe your expected outcome:</label>
+                  <label className="field-label flex items-center">
+                    Describe your expected outcome:
+                    <Tooltip text="Be specific! Examples: '50 qualified leads per month', '10% increase in online sales', '5000 website visitors', or 'Establish brand presence in Dubai market'." />
+                  </label>
                   <textarea
                     className="field-input min-h-[100px]"
+                    placeholder="e.g., Generate 30-50 quality leads per month with a target CPA of 50 AED"
                     value={formData.campaignObjective.expectedOutcome}
                     onChange={(e) =>
                       handleInputChange('campaignObjective', 'expectedOutcome', e.target.value)
@@ -653,7 +686,10 @@ export default function IntakeForm() {
             <section ref={(el) => (sectionRefs.current[3] = el)}>
               <h2 className="section-header rounded">CAMPAIGN BUDGET</h2>
               <div className="mt-6">
-                <p className="subsection">Daily budget (Approximate):</p>
+                <p className="subsection flex items-center">
+                  Daily budget (Approximate):
+                  <Tooltip text="Your daily ad spend. Google Ads typically needs 300-500 AED/day minimum for meaningful results in Dubai market. Start conservatively and scale up based on performance." />
+                </p>
                 <div className="ml-6 space-y-2">
                   {['10 - 20 AED', '20 - 50 AED', '50 - 100 AED', '100+ AED'].map((budget) => (
                     <div key={budget} className="checkbox-item">
@@ -787,9 +823,13 @@ export default function IntakeForm() {
               <h2 className="section-header rounded">KEYWORDS & COMPETITORS</h2>
               <div className="mt-6 space-y-6">
                 <div className="field-group">
-                  <label className="field-label">Keywords you want to target (if available):</label>
+                  <label className="field-label flex items-center">
+                    Keywords you want to target (if available):
+                    <Tooltip text="Examples: 'luxury watches Dubai', 'best plumber near me', 'buy organic food online'. Include 5-10 relevant keywords your customers might search for." />
+                  </label>
                   <textarea
                     className="field-input min-h-[80px]"
+                    placeholder="e.g., digital marketing services, SEO Dubai, social media management"
                     value={formData.keywordsCompetitors.keywords}
                     onChange={(e) =>
                       handleInputChange('keywordsCompetitors', 'keywords', e.target.value)
@@ -797,9 +837,13 @@ export default function IntakeForm() {
                   />
                 </div>
                 <div className="field-group">
-                  <label className="field-label">Competitor companies / websites / brands:</label>
+                  <label className="field-label flex items-center">
+                    Competitor companies / websites / brands:
+                    <Tooltip text="List 3-5 main competitors in your market. Include their website URLs if possible. This helps us understand your competitive landscape." />
+                  </label>
                   <textarea
                     className="field-input min-h-[80px]"
+                    placeholder="e.g., competitor1.com, Competitor Name 2, brandname3.ae"
                     value={formData.keywordsCompetitors.competitors}
                     onChange={(e) =>
                       handleInputChange('keywordsCompetitors', 'competitors', e.target.value)
@@ -823,7 +867,10 @@ export default function IntakeForm() {
             <section ref={(el) => (sectionRefs.current[7] = el)}>
               <h2 className="section-header rounded">UNIQUE SELLING POINTS (USPs)</h2>
               <div className="mt-6">
-                <p className="subsection">Select all that apply to your business:</p>
+                <p className="subsection flex items-center">
+                  Select all that apply to your business:
+                  <Tooltip text="USPs are what make you different from competitors. Choose the benefits that truly set you apart and resonate with your target customers." />
+                </p>
                 <div className="ml-6 grid grid-cols-1 md:grid-cols-2 gap-2">
                   {[
                     'Fast / Same-Day Delivery',
